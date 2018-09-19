@@ -47,6 +47,7 @@ class Raisenow_Community_Frontend {
 
 					// Organisation: greenpeace
 					'stored_campaign_id' => '61621285', // projectId
+					'stored_campaign_id_recurring' => '74331173',
 					'stored_campaign_subid' => '29744', // paymentOptionId
 					'stored_sxt_product_id' => '9229', // productId
 					'stored_sxt_contract_template_id' => '', // contractTemplateId
@@ -219,29 +220,37 @@ class Raisenow_Community_Frontend {
 
 			// Set Sextant parameters and other Greenpeace specific options
 			$return .= "
+				var recurring = false;
 				options.widget.on(window.rnwWidget.constants.events.DONATION_TYPE_CHANGED, function(event) {
-				// if (event.value == true) then recurring else one-time
+					// if (event.value == true) then recurring else one-time
 					if (event.value){
-						//recurring
+						// recurring
 						recurring = true;
-						// Setzen der SEXTANT-Parameter
-						event.widget.set('stored_campaign_id', '{$stored_campaign_id}'); // recurring
-						event.widget.set('stored_campaign_subid', '');
-						// Man kann die contract template Uid überschreiben, im Connector aber schon vordefiniert
-						// options.defaults['stored_sxt_contract_template_id'] = '507914'; 
-					  
 					} 
 					else {
-						//one-time
+						// one-time
 						recurring = false;
-						event.widget.set('stored_campaign_id', '{$stored_campaign_id}'); // single
-						event.widget.set('stored_campaign_subid', '{$stored_campaign_subid}');
 					}
 				});
 
 				options.widget.on(window.rnwWidget.constants.events.WIDGET_LOADED, function(event) {
 					// Set default payment method
 				   	event.widget.set('payment_method','vis');
+				});
+
+				options.widget.on(window.rnwWidget.constants.events.BEFORE_SUBMIT, function(event) {
+					if (recurring){
+						// Setzen der SEXTANT-Parameter
+						event.widget.set('stored_campaign_id', '{$stored_campaign_id_recurring}'); // recurring
+						event.widget.set('stored_campaign_subid', '');
+						event.widget.set('stored_sxt_product_id', '{$stored_sxt_product_id}');
+						// Man kann die contract template Uid überschreiben, im Connector aber schon vordefiniert
+						// options.defaults['stored_sxt_contract_template_id'] = '507914'; 
+					} else {
+						event.widget.set('stored_campaign_id', '{$stored_campaign_id}'); // single
+						event.widget.set('stored_campaign_subid', '{$stored_campaign_subid}');
+						event.widget.set('stored_sxt_product_id', '');
+					}
 				});
 			";
 		}
