@@ -60,6 +60,9 @@ class Raisenow_Community_Main {
 			
 			$this->add_short_code_generator( $context );
 			$this->add_options( $context );
+			
+			// will only fire when visual composer is installed
+			//add_action( 'vc_before_init', array( &$this, 'add_vc_elements' ) );
 		} );
 	}
 	
@@ -102,6 +105,15 @@ class Raisenow_Community_Main {
 				add_action( 'admin_enqueue_scripts', array( &$options, 'add_code_editor' ) );
 			}
 		}
+	}
+
+	/**
+	* Add Visual Composer elements (only if visual composer is installed)
+	*
+	* @param null|WP_Screen $context
+	*/
+	public function add_vc_elements( $context ) {
+		require_once( RAISENOW_COMMUNITY_PATH . '/includes/visual-composer/vc-elements.php' );
 	}
 	
 	/**
@@ -200,3 +212,11 @@ class Raisenow_Community_Main {
 
 // entry point
 new Raisenow_Community_Main();
+
+/*
+add_action( 'vc_before_init', 'add_vc_elements123' );
+
+public function add_vc_elements123( ) {
+	//require_once( RAISENOW_COMMUNITY_PATH . '/includes/visual-composer/vc-elements.php' );
+}
+*/
