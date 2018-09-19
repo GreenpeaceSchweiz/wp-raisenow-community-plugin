@@ -168,7 +168,7 @@ class Raisenow_Community_Frontend {
 		$allowed_values_interval = array('weekly', 'monthly', 'quarterly', 'semestral', 'yearly');
 
 		if ( !empty( $default_recurring_interval) && in_array($default_recurring_interval, $allowed_values_interval ) ) {
-			$return .= "options.defaults['ui_recurring_interval_default'] = 'yearly';" . "\n";
+			$return .= "options.defaults['ui_recurring_interval_default'] = '{$default_recurring_interval}';" . "\n";
 		}
 
 		// Set minimum amounts for single donations
