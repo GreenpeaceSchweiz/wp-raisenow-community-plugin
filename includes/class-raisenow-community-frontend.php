@@ -41,6 +41,7 @@ class Raisenow_Community_Frontend {
 					'default_amount' => '',
 					'minimum_amount_single' => $generalOptions['minimum_amount_single'],
 					'minimum_amount_monthly' => $generalOptions['minimum_amount_monthly'],
+					'shorten_form' => false,
 					'css'       => '',
 					'class'     => 'raisenow_community_donation_form',
 					'add_class' => '',
@@ -97,6 +98,8 @@ class Raisenow_Community_Frontend {
 		       . '<div class="dds-widget-container" data-widget="lema"></div>'
 		       . '<script language="javascript" src="https://widget.raisenow.com/widgets/lema/' . esc_attr( $api_key ) . '/js/dds-init-widget-' . esc_attr( $language ) . '.js" type="text/javascript"></script>'
 		       . "<script>
+		       		var rnFormElements;
+		       		var rnFormSummary;
 			        window.rnwWidget = window.rnwWidget || {};
 			        window.rnwWidget.configureWidget = window.rnwWidget.configureWidget || [];
 			        window.rnwWidget.configureWidget.push(function(options) {
@@ -122,7 +125,23 @@ class Raisenow_Community_Frontend {
 						});
 						
 				";
+		}
 
+		if ($shorten_form) {
+			$return .= '
+						options.widget.on(window.rnwWidget.constants.events.PAGE_LOADED, function(event) {
+							var rnform = document.getElementsByClassName("lema-full-form");
+							rnFormElements = rnform[0].getElementsByClassName("lema-step lema-shown");
+							rnFormSummary = document.getElementsByClassName("lema-summary-check");
+							for(var i = 0; i < rnFormElements.length; i++) {
+								if (i > 0) {
+							    	rnFormElements[i].style.display = "none";
+							    }
+							}
+							rnFormSummary[0].style.display = "none";
+							document.getElementById("showFullRNFormButton").style.visibility = "visible";
+						});
+			';
 		}
 
 		// Set custom one time amounts
@@ -252,13 +271,29 @@ class Raisenow_Community_Frontend {
 						event.widget.set('stored_sxt_product_id', '');
 					}
 				});
+
 			";
 		}
 
+		
+
 		$return .= "
 			        });
-			      </script>"
-		       . '<script type="text/javascript">' . $custom_script . '</script>'
+
+			        // Shows the full form if it was shortened
+			        function showFullRNForm() {
+					    for(var i = 0; i < rnFormElements.length; i++) {
+					        if (i > 0) {
+					          rnFormElements[i].style.display = 'block';
+					        }
+					    }
+					    rnFormSummary[0].style.display = 'block';
+					    document.getElementById('showFullRNFormButton').style.display = 'none';
+					}
+			      </script>
+			      <a class='btn btn-accent' id='showFullRNFormButton' onClick='showFullRNForm()' style='visibility: hidden;'>" . __( 'Next Step', 'raisenow-community' ) . "</a>";
+
+		$return .= '<script type="text/javascript">' . $custom_script . '</script>'
 		       . '<style type="text/css">' . $custom_css . '</style>'
 		       . '</div>';
 
