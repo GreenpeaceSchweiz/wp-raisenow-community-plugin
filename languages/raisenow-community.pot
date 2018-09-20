@@ -1,11 +1,12 @@
 # Copyright (C) 2018 Cyrill Bolliger | Grüne Schweiz | Les verts suisses
 # This file is distributed under the same license as the RaiseNow donation forms package.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: RaiseNow donation forms 1.0.0\n"
-"Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/raisenow-community\n"
-"POT-Creation-Date: 2018-05-20 15:02:48+00:00\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/raisenow-"
+"community\n"
+"POT-Creation-Date: 2018-09-20 14:40+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,127 +15,257 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Country: United States\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
-"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-Bookmarks: \n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;"
+"_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;"
+"esc_html_x:1,2c\n"
+"X-Poedit-Basepath: ..\n"
 "X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n1.0.2\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: admin/options.php:2
+#: admin/options.php:2 bin/admin/options.php:2
 msgid "Online donation options"
 msgstr ""
 
-#: admin/short-code-generator.php:9
+#: admin/short-code-generator.php:9 bin/admin/short-code-generator.php:9
+#, php-format
 msgid "You need to have a contract with %s to use this function."
 msgstr ""
 
-#: admin/short-code-generator.php:16
+#: admin/short-code-generator.php:16 bin/admin/short-code-generator.php:16
 msgid "Enter the API key you received from RaiseNow"
 msgstr ""
 
-#: admin/short-code-generator.php:19
+#: admin/short-code-generator.php:19 bin/admin/short-code-generator.php:19
 msgid "Enter the API key here."
 msgstr ""
 
-#: admin/short-code-generator.php:24
+#: admin/short-code-generator.php:24 bin/admin/short-code-generator.php:24
 msgid "Choose language for the donation form"
 msgstr ""
 
-#: admin/short-code-generator.php:28
+#: admin/short-code-generator.php:28 bin/admin/short-code-generator.php:28
 msgid "German"
 msgstr ""
 
-#: admin/short-code-generator.php:30
+#: admin/short-code-generator.php:30 bin/admin/short-code-generator.php:30
 msgid "French"
 msgstr ""
 
-#: admin/short-code-generator.php:31
+#: admin/short-code-generator.php:31 bin/admin/short-code-generator.php:31
 msgid "English"
 msgstr ""
 
-#: admin/short-code-generator.php:36
+#: admin/short-code-generator.php:36 bin/admin/short-code-generator.php:36
 msgid "Insert shortcode"
 msgstr ""
 
-#: admin/short-code-generator.php:43
+#: admin/short-code-generator.php:43 bin/admin/short-code-generator.php:43
 msgid "Please enter the API key provided by RaiseNow."
 msgstr ""
 
+#: bin/includes/class-raisenow-community-admin.php:24
+#: bin/includes/class-raisenow-community-admin.php:26
 #: includes/class-raisenow-community-admin.php:24
 #: includes/class-raisenow-community-admin.php:26
 msgid "Insert Donation Form"
 msgstr ""
 
-#: includes/class-raisenow-community-options.php:25
-msgid "Customize donation form"
+#: bin/includes/class-raisenow-community-frontend.php:60
+#: includes/class-raisenow-community-frontend.php:62
+msgid "Test mode for the donation form is ON!"
 msgstr ""
 
-#: includes/class-raisenow-community-options.php:32
-msgid "Add custom script"
-msgstr ""
-
-#: includes/class-raisenow-community-options.php:38
-msgid "Enter your javascript below. It will be applied to all donation forms."
-msgstr ""
-
-#: includes/class-raisenow-community-options.php:47
-msgid "Add custom css"
-msgstr ""
-
-#: includes/class-raisenow-community-options.php:53
-msgid "Enter your custom css below. It will be applied to all donation forms."
-msgstr ""
-
-#: includes/class-raisenow-community-options.php:62
-msgid "Use the options below to customize your donation form."
-msgstr ""
-
-#: raisenow-community.php:130 raisenow-community.php:131
-msgid "Online donations"
-msgstr ""
-
-#: raisenow-community.php:144
-msgid "You do not have sufficient permissions to access this page."
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "RaiseNow donation forms"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "https://github.com/grueneschweiz/wp-raisenow-community-plugin"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"This community plugin lets you add RaiseNow donation forms by shortcode. "
-"IMPORTANT: You need to have a contract with https://www.raisenow.com/en to "
-"use this plugin."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Cyrill Bolliger | Grüne Schweiz | Les verts suisses"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "https://github.com/cyrillbolliger"
-msgstr ""
-
-#: includes/class-raisenow-community-frontend.php:38
+#: bin/includes/class-raisenow-community-frontend.php:77
+#: includes/class-raisenow-community-frontend.php:79
+#, php-format
 msgctxt "%s will be replaced with an example shortcode."
-msgid "Missing api key in shortcode. Shortcode must match the pattern: %s"
+msgid ""
+"Missing api key. Please set your API key either in the global options or in "
+"the shortcode. Shortcode must match the pattern: %s"
 msgstr ""
 
-#: includes/class-raisenow-community-frontend.php:45
+#: bin/includes/class-raisenow-community-frontend.php:85
+#: includes/class-raisenow-community-frontend.php:87
+#, php-format
 msgctxt ""
 "%1$s will be replaced with the accepted language keys. %2$s will be "
 "replaced with an example shortcode."
 msgid ""
 "Unknown language key in shortcode. Accepted values are %1$s. Shortcode must "
 "have the form: %2$s"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:26
+#: includes/class-raisenow-community-options.php:26
+msgid "General Options"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:33
+#: includes/class-raisenow-community-options.php:33
+msgid "Turn on test mode for the forms"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:39
+msgid ""
+"Turn on test mode for the forms. No real transactions possible, use with "
+"care!"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:45
+#: includes/class-raisenow-community-options.php:45
+msgid "RaiseNow API key"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:51
+#: includes/class-raisenow-community-options.php:51
+msgid ""
+"Your RaiseNow API key. Can be overridden in individual shortcodes if "
+"allowed (see setting below)."
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:57
+#: includes/class-raisenow-community-options.php:57
+msgid "Allow the API key set above to be overridden in shortcodes"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:63
+#: includes/class-raisenow-community-options.php:63
+msgid ""
+"The API key for RaiseNow set above can be overridden in shortcodes if this "
+"setting is on. Check this box if your website uses multiple RaiseNow "
+"contracts (or for backwards compatibility)."
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:69
+msgid "Use Sextant options in shortcodes"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:75
+msgid "Displays more shortcode options for use with Sextant CRM."
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:85
+#: includes/class-raisenow-community-options.php:109
+msgid "Widget Options"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:96
+#: includes/class-raisenow-community-options.php:120
+msgid "Organisation Options"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:103
+#: includes/class-raisenow-community-options.php:127
+msgid "Select a supported Organisation"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:119
+#: includes/class-raisenow-community-options.php:143
+msgid "Customize donation form"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:126
+#: includes/class-raisenow-community-options.php:150
+msgid "Add custom script"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:132
+#: includes/class-raisenow-community-options.php:156
+msgid "Enter your javascript below. It will be applied to all donation forms."
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:141
+#: includes/class-raisenow-community-options.php:165
+msgid "Add custom css"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:147
+#: includes/class-raisenow-community-options.php:171
+msgid "Enter your custom css below. It will be applied to all donation forms."
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:156
+#: includes/class-raisenow-community-options.php:180
+msgid "Use the options below to customize your donation form."
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:160
+#: includes/class-raisenow-community-options.php:184
+msgid "Presets for donation widgets (can be overridden in each widget)"
+msgstr ""
+
+#: bin/includes/class-raisenow-community-options.php:164
+#: includes/class-raisenow-community-options.php:188
+msgid "Activate special options for supported organmisations"
+msgstr ""
+
+#: bin/raisenow-community.php:130 bin/raisenow-community.php:131
+#: raisenow-community.php:142 raisenow-community.php:143
+msgid "Online donations"
+msgstr ""
+
+#: bin/raisenow-community.php:144 raisenow-community.php:156
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/class-raisenow-community-frontend.php:294
+msgid "Next Step"
+msgstr ""
+
+#: includes/class-raisenow-community-options.php:39
+msgid ""
+"Turn on test mode for the forms. No real transactions possible and debug "
+"information is printed to the page. Only use this setting if RaiseNow is "
+"also in test mode."
+msgstr ""
+
+#: includes/class-raisenow-community-options.php:69
+msgid "Default minimum amount for single donations"
+msgstr ""
+
+#: includes/class-raisenow-community-options.php:75
+msgid ""
+"Minimum amount that can be donated in the forms for single donations. This "
+"is the default value that can be overridden in shortcodes. "
+msgstr ""
+
+#: includes/class-raisenow-community-options.php:81
+msgid "Default minimum amount for recurring donations (monthly)"
+msgstr ""
+
+#: includes/class-raisenow-community-options.php:87
+msgid ""
+"Minimum amount that can be donated in the forms for monthly recurring "
+"donations. This is the default value that can be overridden in shortcodes. "
+"PLEASE NOTE: specify a monthly value, all other recurring periods will be "
+"calculated, for example yearly will be 12 times this value."
+msgstr ""
+
+#: includes/class-raisenow-community-options.php:93
+msgid "Default recurring interval"
+msgstr ""
+
+#: includes/class-raisenow-community-options.php:99
+msgid ""
+"What interval should be preselected when users select recurring donations? "
+"Valid values are: weekly, monthly, quarterly, semestral, yearly."
+msgstr ""
+
+#: includes/visual-composer/vc-elements.php:22
+#: includes/visual-composer/vc-elements.php:24
+msgid "RaiseNow Donation Form"
+msgstr ""
+
+#: includes/visual-composer/vc-elements.php:25
+msgid "Donations"
+msgstr ""
+
+#: includes/visual-composer/vc-elements.php:30
+msgid "Donation Purpose"
+msgstr ""
+
+#: includes/visual-composer/vc-elements.php:33
+msgid "The donation purpose as shown in RaiseNow"
 msgstr ""
