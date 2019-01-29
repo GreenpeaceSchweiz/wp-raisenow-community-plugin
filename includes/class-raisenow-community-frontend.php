@@ -45,6 +45,7 @@ class Raisenow_Community_Frontend {
 					'css'       => '',
 					'class'     => 'raisenow_community_donation_form',
 					'add_class' => '',
+					'redirect_url_success' => '',
 
 					// Organisation: greenpeace
 					'stored_campaign_id' => '61621285', // projectId
@@ -214,6 +215,18 @@ class Raisenow_Community_Frontend {
 				";
 		}
 
+		// Add redirect URL if any
+		if ( !empty($redirect_url_success) ) {
+			$return .= "
+			options.widget.on(window.rnwWidget.constants.events.PAYMENT_COMPLETE, function(event) {
+                if(event.paymentStatus === 'success') {
+                    // Redirect to another page
+                    window.location = '" . $redirect_url_success . "'; 
+                    event.widget.element.hide();
+                }
+            });";
+		}
+		
 		
 		// Organisation: Grüne Partei Schweiz
 		if ($organisationOptions['organisation'] == 'grueneschweiz') {
