@@ -38,7 +38,7 @@ class Raisenow_Community_Frontend {
 					'default_recurring_interval' => $generalOptions['default_recurring_interval'],
 					'onetime_amounts'  => $generalOptions['onetime_amounts'],
 					'recurring_amounts'  => $generalOptions['recurring_amounts'],
-					'default_amount' => '',
+					'default_amount' => $generalOptions['default_amount'],
 					'minimum_amount_single' => $generalOptions['minimum_amount_single'],
 					'minimum_amount_monthly' => $generalOptions['minimum_amount_monthly'],
 					'shorten_form' => false,

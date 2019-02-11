@@ -89,6 +89,18 @@ class Raisenow_Community_Options {
 		);
 
 		add_settings_field(
+			RAISENOW_COMMUNITY_PREFIX . '_default_default_amount',
+			__( 'The preselected default amount in the form.', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
+			[ &$this, 'render_general_options_textinput' ],
+			RAISENOW_COMMUNITY_PREFIX . '_donation_settings',
+			RAISENOW_COMMUNITY_PREFIX . '_general_section',
+			[
+				'option_id' => 'default_amount',
+				'helptext'  => "<p>" . __( 'Of the above default amounts, enter one that will be preselected in the form. This is the default value that can be overridden in shortcodes. ', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ) . "</p>",
+			]
+		);
+
+		add_settings_field(
 			RAISENOW_COMMUNITY_PREFIX . '_default_minimum_monthly',
 			__( 'Default minimum amount for recurring donations (monthly)', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
 			[ &$this, 'render_general_options_textinput' ],
