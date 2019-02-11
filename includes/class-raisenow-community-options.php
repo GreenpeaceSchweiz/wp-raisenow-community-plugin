@@ -77,6 +77,18 @@ class Raisenow_Community_Options {
 		);
 
 		add_settings_field(
+			RAISENOW_COMMUNITY_PREFIX . '_default_onetime_amounts',
+			__( 'Default amounts for one time donations (comma separated list)', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
+			[ &$this, 'render_general_options_textinput' ],
+			RAISENOW_COMMUNITY_PREFIX . '_donation_settings',
+			RAISENOW_COMMUNITY_PREFIX . '_general_section',
+			[
+				'option_id' => 'onetime_amounts',
+				'helptext'  => "<p>" . __( 'Comma separated list of preset amounts for one time donations. This is the default value that can be overridden in shortcodes. ', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ) . "</p>",
+			]
+		);
+
+		add_settings_field(
 			RAISENOW_COMMUNITY_PREFIX . '_default_minimum_monthly',
 			__( 'Default minimum amount for recurring donations (monthly)', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
 			[ &$this, 'render_general_options_textinput' ],
@@ -85,6 +97,18 @@ class Raisenow_Community_Options {
 			[
 				'option_id' => 'minimum_amount_monthly',
 				'helptext'  => "<p>" . __( 'Minimum amount that can be donated in the forms for monthly recurring donations. This is the default value that can be overridden in shortcodes. PLEASE NOTE: specify a monthly value, all other recurring periods will be calculated, for example yearly will be 12 times this value.', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ) . "</p>",
+			]
+		);
+
+		add_settings_field(
+			RAISENOW_COMMUNITY_PREFIX . '_default_recurring_amounts',
+			__( 'Default amounts for recurring donations (comma separated list)', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
+			[ &$this, 'render_general_options_textinput' ],
+			RAISENOW_COMMUNITY_PREFIX . '_donation_settings',
+			RAISENOW_COMMUNITY_PREFIX . '_general_section',
+			[
+				'option_id' => 'recurring_amounts',
+				'helptext'  => "<p>" . __( 'Comma separated list of preset amounts for recurring donations. This is the default value that can be overridden in shortcodes.', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ) . "</p>",
 			]
 		);
 
