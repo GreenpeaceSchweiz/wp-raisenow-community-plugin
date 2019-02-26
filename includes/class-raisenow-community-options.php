@@ -65,14 +65,14 @@ class Raisenow_Community_Options {
 		);
 
 		add_settings_field(
-			RAISENOW_COMMUNITY_PREFIX . '_default_minimum_single',
-			__( 'Default minimum amount for single donations', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
+			RAISENOW_COMMUNITY_PREFIX . '_default_minimum_onetime',
+			__( 'Default minimum amount for one time donations', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
 			[ &$this, 'render_general_options_textinput' ],
 			RAISENOW_COMMUNITY_PREFIX . '_donation_settings',
 			RAISENOW_COMMUNITY_PREFIX . '_general_section',
 			[
-				'option_id' => 'minimum_amount_single',
-				'helptext'  => "<p>" . __( 'Minimum amount that can be donated in the forms for single donations. This is the default value that can be overridden in shortcodes. ', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ) . "</p>",
+				'option_id' => 'minimum_amount_onetime',
+				'helptext'  => "<p>" . __( 'Minimum amount that can be donated in the forms for onetime donations. This is the default value that can be overridden in shortcodes. ', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ) . "</p>",
 			]
 		);
 

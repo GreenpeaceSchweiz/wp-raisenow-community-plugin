@@ -39,7 +39,7 @@ class Raisenow_Community_Frontend {
 					'onetime_amounts'  => $generalOptions['onetime_amounts'],
 					'recurring_amounts'  => $generalOptions['recurring_amounts'],
 					'default_amount' => $generalOptions['default_amount'],
-					'minimum_amount_single' => $generalOptions['minimum_amount_single'],
+					'minimum_amount_onetime' => $generalOptions['minimum_amount_single'],
 					'minimum_amount_monthly' => $generalOptions['minimum_amount_monthly'],
 					'shorten_form' => false,
 					'css'       => '',
@@ -192,10 +192,10 @@ class Raisenow_Community_Frontend {
 			$return .= "options.defaults['ui_recurring_interval_default'] = '{$default_recurring_interval}';" . "\n";
 		}
 
-		// Set minimum amounts for single donations
-		if ( !empty($minimum_amount_single)) {
+		// Set minimum amounts for one time donations
+		if ( !empty($minimum_amount_onetime)) {
 			$return .= "
-				options.widget.options.common.min_amount.single = {$minimum_amount_single};
+				options.widget.options.common.min_amount.single = {$minimum_amount_onetime};
 				";
 		}
 
