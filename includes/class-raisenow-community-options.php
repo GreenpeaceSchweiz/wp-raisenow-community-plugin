@@ -53,6 +53,18 @@ class Raisenow_Community_Options {
 		);
 
 		add_settings_field(
+			RAISENOW_COMMUNITY_PREFIX . '_default_mode',
+			__( 'Select the default mode of the form (recurring or one time donation)', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
+			[ &$this, 'render_default_mode_select' ],
+			RAISENOW_COMMUNITY_PREFIX . '_donation_settings',
+			RAISENOW_COMMUNITY_PREFIX . '_general_section',
+			[
+				'option_id' => 'default_mode',
+				'helptext'  => "",
+			]
+		);
+
+		add_settings_field(
 			RAISENOW_COMMUNITY_PREFIX . '_allow_shortcode_apikey',
 			__( 'Allow the API key set above to be overridden in shortcodes', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ),
 			[ &$this, 'render_general_options_checkbox' ],
@@ -253,6 +265,31 @@ class Raisenow_Community_Options {
 
 		echo $args['helptext'];
 		echo "<input type='text' name='{$options_id}[{$args['option_id']}]' id='$options_id-{$args['option_id']}' value='{$input}'>";
+	}
+
+	public function render_default_mode_select( $args ) {
+		$options_id = RAISENOW_COMMUNITY_PREFIX . '_general_options';
+		$options    = get_option( $options_id );
+		
+		$supportedOrganisations = array(
+			'recurring' => 'Recurring Donations',
+			'onetime' => 'One time donations',
+		);
+
+		$output = "<select name='{$options_id}[{$args['option_id']}]'>";
+
+		foreach ($supportedOrganisations as $key => $name) {
+			if ($key == $options[ $args['option_id'] ]) {
+				$output .= '<option value="' . $key . '" selected="selected">' . $name . '</option>';
+			}
+			else {
+				$output .= '<option value="' . $key . '">' . $name . '</option>';
+			}
+		}
+
+		$output .= '</select>';
+
+		echo $output;
 	}
 
 	public function render_general_options_checkbox( $args ) {
