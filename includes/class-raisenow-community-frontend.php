@@ -46,6 +46,7 @@ class Raisenow_Community_Frontend {
 					'class'     => 'raisenow_community_donation_form',
 					'add_class' => '',
 					'redirect_url_success' => '',
+					'default_mode' => $generalOptions['default_mode'],
 
 					// Organisation: greenpeace
 					'stored_campaign_id' => '61621285', // projectId
@@ -188,8 +189,20 @@ class Raisenow_Community_Frontend {
 		// Set the default recurring interval (weekly, monthly, quarterly, semestral, yearly)
 		$allowed_values_interval = array('weekly', 'monthly', 'quarterly', 'semestral', 'yearly');
 
-		if ( !empty( $default_recurring_interval) && in_array($default_recurring_interval, $allowed_values_interval ) ) {
+		// Set the default mode of the form to recurring
+		if ($default_mode == 'recurring' && !empty( $default_recurring_interval) && in_array($default_recurring_interval, $allowed_values_interval ) ) {
+			$return .= "options.defaults['recurring_interval'] = '{$default_recurring_interval}';" . "\n";
+
+			// Set the options needed for a recurring interval
+			$return .= "options.defaults['recurring_interval_name'] = '{$default_recurring_interval}';" . "\n";
 			$return .= "options.defaults['ui_recurring_interval_default'] = '{$default_recurring_interval}';" . "\n";
+
+			// The select-dropdown has to be touched for the interval change to be visible
+			$return .= "
+	            options.widget.on(
+	              window.rnwWidget.constants.events.WIDGET_LOADED, function(event) {
+	              event.widget.j('[name=\"interval-selector\"]').val(options.translations.common.quarterly).trigger('change');
+	            }); ";
 		}
 
 		// Set minimum amounts for one time donations
