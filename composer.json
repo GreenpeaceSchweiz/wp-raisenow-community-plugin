@@ -1,0 +1,7 @@
+{
+    "name": "greenpeaceSchweiz/wp-raisenow-community-plugin",
+    "description": "Add configurable RaiseNow donation forms using shortcode.",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "require": {}
+}
