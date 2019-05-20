@@ -7,7 +7,7 @@
  * Author URI:      https://github.com/cyrillbolliger
  * Text Domain:     raisenow-community
  * Domain Path:     /languages
- * Version:         1.1.0
+ * Version:         1.1.1
  *
  * @package         Raisenow_Community
  */
@@ -45,6 +45,8 @@ class Raisenow_Community_Main {
 		} else {
 			$this->add_frontend();
 		}
+
+		$this->load_gutenberg_blocks();
 	}
 	
 	/**
