@@ -45,6 +45,8 @@ class Raisenow_Community_Main {
 		} else {
 			$this->add_frontend();
 		}
+
+		$this->load_gutenberg_blocks();
 	}
 	
 	/**
