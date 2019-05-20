@@ -39,7 +39,7 @@ class Raisenow_Community_Frontend {
 					'onetime_amounts'  => $generalOptions['onetime_amounts'],
 					'recurring_amounts'  => $generalOptions['recurring_amounts'],
 					'default_amount' => $generalOptions['default_amount'],
-					'minimum_amount_onetime' => $generalOptions['minimum_amount_single'],
+					'minimum_amount_onetime' => $generalOptions['minimum_amount_onetime'],
 					'minimum_amount_monthly' => $generalOptions['minimum_amount_monthly'],
 					'shorten_form' => false,
 					'css'       => '',
@@ -60,7 +60,7 @@ class Raisenow_Community_Frontend {
 		);
 
 		// Warn if test mode is on
-		if ( $generalOptions['test_mode'] == 1 ) {
+		if ( key_exists('test_mode', $generalOptions) && $generalOptions['test_mode'] == 1 ) {
 			$return .= '<p style="display:block;padding:1em 2em;background-color:red;color: white;font-weight: bold;">' . __( 'Test mode for the donation form is ON!', 'raisenow-community' ) . '</p>';
 
 			$return .= print_r($atts, true) . "<br>";
@@ -71,7 +71,7 @@ class Raisenow_Community_Frontend {
 		}
 
 		// Setting the API key in shorcodes can be disabled in options. In  that case or if it's not set, the value set on the options should be used.
-		if ( $generalOptions['allow_shortcode_apikey'] != 1 || empty($api_key) ) {
+		if ( key_exists('allow_shortcode_apikey', $generalOptions) && $generalOptions['allow_shortcode_apikey'] != 1 || empty($api_key) ) {
 			$api_key = $generalOptions['api_key'];
 		}
 		
@@ -108,7 +108,7 @@ class Raisenow_Community_Frontend {
 			";
 
 		// Test mode: should only be used when RaiseNow is also in test mode
-		if ($generalOptions['test_mode'] == 1) {
+		if ( key_exists('test_mode', $generalOptions) && $generalOptions['test_mode'] == 1) {
 			$return .= "
 						// Set widget to test mode
 						options.epikOptions.test_mode = 'true';
