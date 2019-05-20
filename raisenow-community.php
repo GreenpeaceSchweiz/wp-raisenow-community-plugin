@@ -7,7 +7,7 @@
  * Author URI:      https://github.com/cyrillbolliger
  * Text Domain:     raisenow-community
  * Domain Path:     /languages
- * Version:         1.0.0
+ * Version:         1.1.0
  *
  * @package         Raisenow_Community
  */
@@ -65,7 +65,17 @@ class Raisenow_Community_Main {
 			//add_action( 'vc_before_init', array( &$this, 'add_vc_elements' ) );
 		} );
 	}
-	
+
+
+	/**
+	 * Load Gutenberg Blocks for donation forms
+	 */
+	public function load_gutenberg_blocks() {
+		require_once( RAISENOW_COMMUNITY_PATH . '/admin/Raisenow_Community_Gutenberg_Block.php' );
+
+		$gutenberg_block = new Raisenow_Community_Gutenberg_Block();
+	}
+
 	/**
 	 * register hooks for the shortcode generator for posts, pages and all custom post types.
 	 *
