@@ -27,6 +27,14 @@ class Raisenow_Community_Frontend {
 		$organisationOptions = get_option( RAISENOW_COMMUNITY_PREFIX . '_organisation_options' );
 		$donationOptions = get_option( RAISENOW_COMMUNITY_PREFIX . '_donation_options' );
 
+		// Unset attributes with empty content
+		// shortcode_atts will not use the default values otherwise
+		foreach ($atts as $key => $value) {
+			if ($value == '') {
+				unset($atts[$key]);
+			}
+		}
+
 		extract(
 			shortcode_atts(
 				array(
