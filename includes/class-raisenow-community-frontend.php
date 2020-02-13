@@ -236,17 +236,36 @@ class Raisenow_Community_Frontend {
 				";
 		}
 
+		$return .= "
+			options.widget.on(window.rnwWidget.constants.events.PAYMENT_COMPLETE, function(event) {";
+
+		// Push data into data layer
+		$return .= "
+                if(event.paymentStatus === 'success') {
+                    dataLayer.push({
+                        'event': 'donationSuccess',
+                        'donation_purpose': event.payment.stored_rnw_purpose_text,
+                        'donation_amount': event.payment.amount,
+                        'donation_payment_method': event.payment.payment_method,
+                        'donation_recurring_interval_name': event.payment.recurring_interval_name,
+                        'donation_is_recurring': event.payment.meta_recurring,
+                    });
+                }
+            ";
+
 		// Add redirect URL if any
 		if ( !empty($redirect_url_success) ) {
 			$return .= "
-			options.widget.on(window.rnwWidget.constants.events.PAYMENT_COMPLETE, function(event) {
                 if(event.paymentStatus === 'success') {
                     // Redirect to another page
                     window.location = '" . $redirect_url_success . "'; 
                     event.widget.element.hide();
                 }
-            });";
+            ";
 		}
+
+		$return .= "
+			});";
 		
 		
 		// Organisation: Grüne Partei Schweiz
