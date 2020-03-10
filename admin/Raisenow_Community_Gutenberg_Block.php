@@ -46,6 +46,7 @@ if ( ! class_exists( 'Raisenow_Community_Gutenberg_Block' ) ) {
 								'choices'           => array(
 									'de' => 'DE',
 									'fr' => 'FR',
+									'it' => 'IT',
 								),
 								'default_value'     => array(
 									0 => 'de',

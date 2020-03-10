@@ -20,7 +20,7 @@ class Raisenow_Community_Frontend {
 	public function donation_form( $atts ) {
 		$return = '';
 
-		$languages = [ 'de', 'fr', 'en' ];
+		$languages = [ 'de', 'fr', 'it', 'en' ];
 
 		$generalOptions = get_option( RAISENOW_COMMUNITY_PREFIX . '_general_options' );
 		$widgetOptions = get_option( RAISENOW_COMMUNITY_PREFIX . 'widget_options' );
