@@ -23,11 +23,10 @@
                     <label for="<?php echo RAISENOW_COMMUNITY_PREFIX ?>-donation_form-language">
 						<?php _e( 'Choose language for the donation form', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ); ?>
                     </label><br/>
-                    <select name="<?php echo RAISENOW_COMMUNITY_PREFIX ?>-donation_form-language"
-                            id="<?php echo RAISENOW_COMMUNITY_PREFIX ?>-donation_form-language">
-                        <option value="de" selected="selected"><?php _e( 'German',
-								RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ); ?></option>
+                    <select name="<?php echo RAISENOW_COMMUNITY_PREFIX ?>-donation_form-language" id="<?php echo RAISENOW_COMMUNITY_PREFIX ?>-donation_form-language">
+                        <option value="de" selected="selected"><?php _e( 'German', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ); ?></option>
                         <option value="fr"><?php _e( 'French', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ); ?></option>
+	                    <option value="it"><?php _e( 'Italian', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ); ?></option>
                         <option value="en"><?php _e( 'English', RAISENOW_COMMUNITY_PREFIX, 'raisenow-community' ); ?></option>
                     </select>
                 </p>
