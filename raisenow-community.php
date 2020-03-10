@@ -7,7 +7,7 @@
  * Author URI:      https://github.com/cyrillbolliger
  * Text Domain:     raisenow-community
  * Domain Path:     /languages
- * Version:         1.1.4
+ * Version:         1.2.0
  *
  * @package         Raisenow_Community
  */
