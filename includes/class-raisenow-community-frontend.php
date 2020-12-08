@@ -27,6 +27,8 @@ class Raisenow_Community_Frontend {
 		$organisationOptions = get_option( RAISENOW_COMMUNITY_PREFIX . '_organisation_options' );
 		$donationOptions = get_option( RAISENOW_COMMUNITY_PREFIX . '_donation_options' );
 
+		$internalTraffic = (array_key_exists('internal_traffic', $_COOKIE) && $_COOKIE['internal_traffic']) ?  1 : 0;
+
 		// Unset attributes with empty content
 		// shortcode_atts will not use the default values otherwise
 		foreach ($atts as $key => $value) {
@@ -122,6 +124,12 @@ class Raisenow_Community_Frontend {
 						options.epikOptions.test_mode = 'true';
 				";
 		}
+
+		$return .= "
+						// Set GA ClientID & custom dimensions (but add the actual value later)
+						options.defaults['stored_ga_clientids'] = '';
+						options.defaults['stored_ga_custom_dimensions'] = '';
+				";
 
 		// Set the donation purpose as specified in options and hides the donation purpose in the form
 		if ( !empty($purpose_key) && !empty($purpose_text) ) {
@@ -323,6 +331,21 @@ class Raisenow_Community_Frontend {
 						event.widget.set('stored_campaign_subid', '{$stored_campaign_subid}');
 						event.widget.set('stored_sxt_product_id', '');
 					}
+					
+					// Analytics ClientIDs
+					if (typeof gpchGAClientIds === 'object') {
+						event.widget.set('stored_ga_clientids', JSON.stringify(gpchGAClientIds));
+					}
+					
+					// Analytics additional data
+					try {
+						var gpch_ga_data = {
+							'internal_traffic': " .  $internalTraffic . ",
+							'tags': google_tag_manager[google_tag_value ].dataLayer.get('post_tags')
+						};
+						
+						event.widget.set('stored_ga_custom_dimensions', JSON.stringify(gpch_ga_data));
+					} catch (e) {}
 				});
 
 			";
