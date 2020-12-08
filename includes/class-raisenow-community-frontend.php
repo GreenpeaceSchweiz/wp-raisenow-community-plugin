@@ -158,6 +158,7 @@ class Raisenow_Community_Frontend {
 							}
 							rnFormSummary[0].style.display = "none";
 							document.getElementById("showFullRNFormButton").style.visibility = "visible";
+							gpchDonationsAttachEventHandlers();
 						});
 			';
 		}
@@ -218,6 +219,9 @@ class Raisenow_Community_Frontend {
 	            options.widget.on(
 	              window.rnwWidget.constants.events.WIDGET_LOADED, function(event) {
 	              event.widget.j('[name=\"interval-selector\"]').val(options.translations.common.quarterly).trigger('change');
+	              dataLayer.push({
+                    'event': 'donationWidgetLoaded',
+                  });
 	            }); ";
 		}
 
@@ -370,9 +374,92 @@ class Raisenow_Community_Frontend {
 			      <a class='btn btn-accent' id='showFullRNFormButton' onClick='showFullRNForm()' style='visibility: hidden;'>" . __( 'Next Step', 'raisenow-community' ) . "</a>";
 
 		$return .= '<script type="text/javascript">' . $custom_script . '</script>'
-		       . '<style type="text/css">' . $custom_css . '</style>'
-		       . '</div>';
+		           . '<style type="text/css">' . $custom_css . '</style>'
+		           . '</div>';
+
+		$return .= $this->interactionEventScript();
 
 		return $return;
+	}
+
+	protected function interactionEventScript() {
+		$output = "<script type='text/javascript'>
+		
+		function gpchDonationsAttachEventHandlers() {
+			// First form interaction
+			var hasInteracted = false;
+			
+			document.querySelector('.raisenow_community_donation_form').addEventListener('click', function() {
+				if (! hasInteracted) {
+					dataLayer.push({
+	                    'event': 'donationWidgetFirstInteraction',
+	                  });
+					hasInteracted = true;
+				}
+			}, false);
+			
+			// Next button click
+			var nextButtonClicked = false;
+			
+			document.querySelector('#showFullRNFormButton').addEventListener('click', function() {
+				if (! nextButtonClicked) {
+					dataLayer.push({
+						'event': 'donationWidgetNextButton',
+					});
+					nextButtonClicked = true;
+				}
+			}, false);
+			
+			// Step payment options
+			var paymentOptionClicked = false;
+			
+			var paymentElements1 = document.querySelectorAll('#greenpeace-ch-default-cardno');
+			
+			for (i = 0; i < paymentElements1.length; ++i) {
+				paymentElements1[i].addEventListener('focus', sendStepPaymentEvent, false);
+			}
+			
+			var paymentElements2 = document.querySelectorAll('.lema-step-payment-method .lema-accordion-header');
+			
+			for (i = 0; i < paymentElements2.length; ++i) {
+				paymentElements2[i].addEventListener('click', sendStepPaymentEvent, false);
+			}
+	
+			function sendStepPaymentEvent() {
+				if (! paymentOptionClicked) {
+					dataLayer.push({
+						'event': 'donationWidgetStepPayment',
+					});
+					paymentOptionClicked = true;
+				}
+			}
+			
+			// Step customer identity interaction
+			var customerIdentityClicked = false;
+			
+			document.querySelector('.lema-step-customer-identity input[type=text]').addEventListener('focus', function() {
+				if (! customerIdentityClicked) {
+					dataLayer.push({
+						'event': 'donationWidgetStepPersonal',
+					});
+					customerIdentityClicked = true;
+				}
+			}, false);
+	
+			// Step customer address
+			var customerAddressClicked = false;
+			
+			document.querySelector('#greenpeace-ch-default-stored_customer_street').addEventListener('focus', function() {
+				if (! customerAddressClicked) {
+					dataLayer.push({
+						'event': 'donationWidgetStepAddress',
+					});
+					customerAddressClicked = true;
+				}
+			}, false);
+		}
+		</script>";
+
+		return $output;
 	}
 }
