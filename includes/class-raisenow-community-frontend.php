@@ -110,6 +110,8 @@ class Raisenow_Community_Frontend {
 		       . '<div class="dds-widget-container" data-widget="lema"></div>'
 		       . '<script language="javascript" src="https://widget.raisenow.com/widgets/lema/' . esc_attr( $api_key ) . '/js/dds-init-widget-' . esc_attr( $language ) . '.js" type="text/javascript"></script>'
 		       . "<script>
+					var gpchDonationItemName = '{$purpose_text}';
+					var gpchDonationItemId = '{$stored_campaign_id}';
 		       		var rnFormElements;
 		       		var rnFormSummary;
 			        window.rnwWidget = window.rnwWidget || {};
@@ -219,9 +221,17 @@ class Raisenow_Community_Frontend {
 	            options.widget.on(
 	              window.rnwWidget.constants.events.WIDGET_LOADED, function(event) {
 	              event.widget.j('[name=\"interval-selector\"]').val(options.translations.common.quarterly).trigger('change');
-	              dataLayer.push({
-                    'event': 'donationWidgetLoaded',
-                  });
+                  dataLayer.push({
+					'ecommerce': {
+						'detail': {
+							'products': [{
+								'name': gpchDonationItemName,
+								'id': gpchDonationItemId
+							}]
+						}
+					}
+				  });
+
 	            }); ";
 		}
 
@@ -392,8 +402,18 @@ class Raisenow_Community_Frontend {
 			document.querySelector('.raisenow_community_donation_form').addEventListener('click', function() {
 				if (! hasInteracted) {
 					dataLayer.push({
-	                    'event': 'donationWidgetFirstInteraction',
-	                  });
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 1},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
+					});
+
 					hasInteracted = true;
 				}
 			}, false);
@@ -404,8 +424,18 @@ class Raisenow_Community_Frontend {
 			document.querySelector('#showFullRNFormButton').addEventListener('click', function() {
 				if (! nextButtonClicked) {
 					dataLayer.push({
-						'event': 'donationWidgetNextButton',
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 2},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
 					});
+					
 					nextButtonClicked = true;
 				}
 			}, false);
@@ -428,8 +458,27 @@ class Raisenow_Community_Frontend {
 			function sendStepPaymentEvent() {
 				if (! paymentOptionClicked) {
 					dataLayer.push({
-						'event': 'donationWidgetStepPayment',
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 3},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
 					});
+					
+					dataLayer.push({
+						'event': 'checkoutOption',
+						'ecommerce': {
+							'checkout_option': {
+								'actionField': {'step': 3, 'option': 'payment method'}
+							}
+						}
+					});
+
 					paymentOptionClicked = true;
 				}
 			}
@@ -440,7 +489,16 @@ class Raisenow_Community_Frontend {
 			document.querySelector('.lema-step-customer-identity input[type=text]').addEventListener('focus', function() {
 				if (! customerIdentityClicked) {
 					dataLayer.push({
-						'event': 'donationWidgetStepPersonal',
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 4},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
 					});
 					customerIdentityClicked = true;
 				}
@@ -452,7 +510,16 @@ class Raisenow_Community_Frontend {
 			document.querySelector('#greenpeace-ch-default-stored_customer_street').addEventListener('focus', function() {
 				if (! customerAddressClicked) {
 					dataLayer.push({
-						'event': 'donationWidgetStepAddress',
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 5},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
 					});
 					customerAddressClicked = true;
 				}
