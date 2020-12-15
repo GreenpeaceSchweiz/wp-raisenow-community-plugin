@@ -27,6 +27,8 @@ class Raisenow_Community_Frontend {
 		$organisationOptions = get_option( RAISENOW_COMMUNITY_PREFIX . '_organisation_options' );
 		$donationOptions = get_option( RAISENOW_COMMUNITY_PREFIX . '_donation_options' );
 
+		$internalTraffic = (array_key_exists('internal_traffic', $_COOKIE) && $_COOKIE['internal_traffic']) ?  1 : 0;
+
 		// Unset attributes with empty content
 		// shortcode_atts will not use the default values otherwise
 		foreach ($atts as $key => $value) {
@@ -108,6 +110,8 @@ class Raisenow_Community_Frontend {
 		       . '<div class="dds-widget-container" data-widget="lema"></div>'
 		       . '<script language="javascript" src="https://widget.raisenow.com/widgets/lema/' . esc_attr( $api_key ) . '/js/dds-init-widget-' . esc_attr( $language ) . '.js" type="text/javascript"></script>'
 		       . "<script>
+					var gpchDonationItemName = '{$purpose_text}';
+					var gpchDonationItemId = '{$stored_campaign_id}';
 		       		var rnFormElements;
 		       		var rnFormSummary;
 			        window.rnwWidget = window.rnwWidget || {};
@@ -122,6 +126,12 @@ class Raisenow_Community_Frontend {
 						options.epikOptions.test_mode = 'true';
 				";
 		}
+
+		$return .= "
+						// Set GA ClientID & custom dimensions (but add the actual value later)
+						options.defaults['stored_ga_clientids'] = '';
+						options.defaults['stored_ga_custom_dimensions'] = '';
+				";
 
 		// Set the donation purpose as specified in options and hides the donation purpose in the form
 		if ( !empty($purpose_key) && !empty($purpose_text) ) {
@@ -150,6 +160,7 @@ class Raisenow_Community_Frontend {
 							}
 							rnFormSummary[0].style.display = "none";
 							document.getElementById("showFullRNFormButton").style.visibility = "visible";
+							gpchDonationsAttachEventHandlers();
 						});
 			';
 		}
@@ -210,6 +221,17 @@ class Raisenow_Community_Frontend {
 	            options.widget.on(
 	              window.rnwWidget.constants.events.WIDGET_LOADED, function(event) {
 	              event.widget.j('[name=\"interval-selector\"]').val(options.translations.common.quarterly).trigger('change');
+                  dataLayer.push({
+					'ecommerce': {
+						'detail': {
+							'products': [{
+								'name': gpchDonationItemName,
+								'id': gpchDonationItemId
+							}]
+						}
+					}
+				  });
+
 	            }); ";
 		}
 
@@ -323,6 +345,21 @@ class Raisenow_Community_Frontend {
 						event.widget.set('stored_campaign_subid', '{$stored_campaign_subid}');
 						event.widget.set('stored_sxt_product_id', '');
 					}
+					
+					// Analytics ClientIDs
+					if (typeof gpchGAClientIds === 'object') {
+						event.widget.set('stored_ga_clientids', JSON.stringify(gpchGAClientIds));
+					}
+					
+					// Analytics additional data
+					try {
+						var gpch_ga_data = {
+							'internal_traffic': " .  $internalTraffic . ",
+							'tags': google_tag_manager[google_tag_value ].dataLayer.get('post_tags')
+						};
+						
+						event.widget.set('stored_ga_custom_dimensions', JSON.stringify(gpch_ga_data));
+					} catch (e) {}
 				});
 
 			";
@@ -347,9 +384,149 @@ class Raisenow_Community_Frontend {
 			      <a class='btn btn-accent' id='showFullRNFormButton' onClick='showFullRNForm()' style='visibility: hidden;'>" . __( 'Next Step', 'raisenow-community' ) . "</a>";
 
 		$return .= '<script type="text/javascript">' . $custom_script . '</script>'
-		       . '<style type="text/css">' . $custom_css . '</style>'
-		       . '</div>';
+		           . '<style type="text/css">' . $custom_css . '</style>'
+		           . '</div>';
+
+		$return .= $this->interactionEventScript();
 
 		return $return;
+	}
+
+	protected function interactionEventScript() {
+		$output = "<script type='text/javascript'>
+		
+		function gpchDonationsAttachEventHandlers() {
+			// First form interaction
+			var hasInteracted = false;
+			
+			document.querySelector('.raisenow_community_donation_form').addEventListener('click', function() {
+				if (! hasInteracted) {
+					dataLayer.push({
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 1},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
+					});
+
+					hasInteracted = true;
+				}
+			}, false);
+			
+			// Next button click
+			var nextButtonClicked = false;
+			
+			document.querySelector('#showFullRNFormButton').addEventListener('click', function() {
+				if (! nextButtonClicked) {
+					dataLayer.push({
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 2},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
+					});
+					
+					nextButtonClicked = true;
+				}
+			}, false);
+			
+			// Step payment options
+			var paymentOptionClicked = false;
+			
+			var paymentElements1 = document.querySelectorAll('#greenpeace-ch-default-cardno');
+			
+			for (i = 0; i < paymentElements1.length; ++i) {
+				paymentElements1[i].addEventListener('focus', sendStepPaymentEvent, false);
+			}
+			
+			var paymentElements2 = document.querySelectorAll('.lema-step-payment-method .lema-accordion-header');
+			
+			for (i = 0; i < paymentElements2.length; ++i) {
+				paymentElements2[i].addEventListener('click', sendStepPaymentEvent, false);
+			}
+	
+			function sendStepPaymentEvent() {
+				if (! paymentOptionClicked) {
+					dataLayer.push({
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 3},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
+					});
+					
+					dataLayer.push({
+						'event': 'checkoutOption',
+						'ecommerce': {
+							'checkout_option': {
+								'actionField': {'step': 3, 'option': 'payment method'}
+							}
+						}
+					});
+
+					paymentOptionClicked = true;
+				}
+			}
+			
+			// Step customer identity interaction
+			var customerIdentityClicked = false;
+			
+			document.querySelector('.lema-step-customer-identity input[type=text]').addEventListener('focus', function() {
+				if (! customerIdentityClicked) {
+					dataLayer.push({
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 4},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
+					});
+					customerIdentityClicked = true;
+				}
+			}, false);
+	
+			// Step customer address
+			var customerAddressClicked = false;
+			
+			document.querySelector('#greenpeace-ch-default-stored_customer_street').addEventListener('focus', function() {
+				if (! customerAddressClicked) {
+					dataLayer.push({
+						'event': 'checkout',
+						'ecommerce': {
+							'checkout': {
+								'actionField': {'step': 5},
+								'products': [{
+									'name': gpchDonationItemName,
+									'id': gpchDonationItemId
+								}]
+							}
+						}
+					});
+					customerAddressClicked = true;
+				}
+			}, false);
+		}
+		</script>";
+
+		return $output;
 	}
 }
