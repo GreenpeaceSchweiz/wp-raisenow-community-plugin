@@ -59,8 +59,8 @@ class Raisenow_Community_Frontend {
 					'default_mode' => $generalOptions['default_mode'],
 
 					// Organisation: greenpeace
-					'stored_campaign_id' => '61621285', // projectId
-					'stored_campaign_id_recurring' => '79528997',
+					'stored_campaign_id' => '61621285', // projectId (one-time donations)
+					'stored_campaign_id_recurring' => '82928677', // projectId (recurring donations)
 					'stored_campaign_subid' => '29744', // paymentOptionId
 					'stored_sxt_product_id' => '9229', // productId
 					'stored_sxt_contract_template_id' => '', // contractTemplateId
